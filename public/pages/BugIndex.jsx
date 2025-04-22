@@ -61,6 +61,7 @@ export function BugIndex() {
         <header>
             <h3>Bug List</h3>
             <button onClick={onAddBug}>Add Bug</button>
+            
         </header>
         <BugList
             bugs={bugs}

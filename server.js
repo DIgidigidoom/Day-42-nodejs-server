@@ -41,13 +41,41 @@ app.get('/api/bug/save', (req, res) => {
 })
 app.get('/api/bug/:bugId', (req, res) => {
     const { bugId } = req.params
+    let visitedBugs = []
+
+    if (req.cookies.visitedBugs) {
+        const raw = req.cookies.visitedBugs
+        if (raw.startsWith('[') && raw.endsWith(']')) {
+            visitedBugs = JSON.parse(raw)
+        }
+    }
+
+    
+    if (!visitedBugs.includes(bugId)) {
+        visitedBugs.push(bugId)
+    }
+
+    console.log('User visited the following bugs:', visitedBugs)
+
+    if (visitedBugs.length > 3) {
+        return res.status(401).send('Wait for a bit')
+    }
+
+    
+    res.cookie('visitedBugs', JSON.stringify(visitedBugs), {
+        maxAge: 30000,
+        httpOnly: true
+    })
     bugService.getById(bugId)
         .then(bug => res.send(bug))
         .catch(err => {
             // loggerService.error('Cannot get bug', err)
             res.status(400).send('Cannot get bug')
         })
+
 })
+
+
 app.get('/api/bug/:bugId/remove', (req, res) => {
     const { bugId } = req.params
     bugService.remove(bugId)
@@ -58,12 +86,11 @@ app.get('/api/bug/:bugId/remove', (req, res) => {
         })
 })
 
+
+
 const port = 3030
 
 app.listen(port)
-// , () =>
-//     // loggerService.info(`Server listening on port http://127.0.0.1:${port}/`)
-// )
 
 
 

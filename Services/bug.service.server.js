@@ -1,8 +1,16 @@
 import fs from 'fs'
 import { utilService } from "./util.service.js";
+import PDFDocument from 'pdfkit-table'
 
 const bugs = utilService.readJsonFile('Data/bugs.json')
 console.log(bugs)
+
+let doc = new PDFDocument({ margin: 30, size: 'A4' })
+
+// connect to a write stream 
+doc.pipe(fs.createWriteStream('./bugs.pdf'))
+createPdf(doc, bugs)
+    .then(() => doc.end())      // close document 
 
 export const bugService = {
     query,
@@ -61,3 +69,18 @@ function _saveBugsToFile() {
         })
     })
 }
+
+function createPdf(doc, bugs) {
+    const table = {
+        title: 'Bugs',
+        subtitle: 'Sorted by Alphabetical order',
+        headers: ['Bug title', 'Bug Description', 'Severity'],
+        rows: bugs.map(bug => [
+            bug.title || 'N/A',
+            bug.description || 'N/A',
+            bug.severity || 'N/A',
+        ]),
+    }
+    return doc.table(table, { columnsSize: [200, 100, 100] })
+    
+} 
