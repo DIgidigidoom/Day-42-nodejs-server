@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Infinite Loop Detected",
+        "description": "Forever and ever and ever and ever and ever..",
+        "severity": 4,
+        "_id": "1NF1N1T3"
+    },
+    {
+        "title": "Keyboard Not Found",
+        "description": "No KeyBoard connected to the PC",
+        "severity": 3,
+        "_id": "K3YB0RD"
+    },
+    {
+        "title": "404 Coffee Not Found",
+        "description": "Improve your java sklills",
+        "severity": 2,
+        "_id": "C0FF33"
+    },
+    {
+        "title": "Unexpected Response",
+        "description": "Huh?",
+        "severity": 1,
+        "_id": "G0053"
+    },
+    {
+        "title": "Bug 1745333858013",
+        "description": "asdfasd",
+        "severity": 5,
+        "_id": "j7TtN"
+    }
+]
