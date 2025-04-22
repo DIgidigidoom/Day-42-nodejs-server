@@ -14,3 +14,5 @@ app.get('/api/bug/:bugId/remove', (req, res) => {res.send('bug/bogid/remove')})
 
 
 
+
+
